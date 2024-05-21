@@ -1,2 +1,3 @@
-# catalyst.dbla.v1.api
-Database Access Layer - DBLA
+# catalyst.dbal.v1.api
+Database Access Layer - DBAL
+
