@@ -4,6 +4,8 @@ const { initializaSwagger } = require("./swagger");
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const ServerBasicResponse = require('./utils/texts/serverBasicResponse');
+// const routers = require('./routers');
+const EnterpriseRouter = require('./routers/EnterpriseRouter');
 
 class DatabaseAccessLayerApplication {
     constructor(port) {
@@ -12,13 +14,14 @@ class DatabaseAccessLayerApplication {
         this.startUtilities();
         this.configureMiddlewares();
         this.configureLogger();
+        this.generateRouters();
     }
 
     configureMiddlewares() {
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
-        initializaSwagger(this.app);
+        initializaSwagger(this.app, this.ServerBasicResponse);
     }
 
     configureLogger() {
@@ -29,6 +32,11 @@ class DatabaseAccessLayerApplication {
         } else {
             this.app.use(morgan('dev'));    // Enable logging
         }
+    }
+
+    generateRouters() {
+        const enterprise = new EnterpriseRouter();
+        this.app.use('/enterprise', enterprise.getRouter());
     }
 
     startUtilities () {
@@ -56,7 +64,7 @@ class DatabaseAccessLayerApplication {
         await this.connectToDatabase();
         this.app.listen(this.PORT, () => {
             console.log(`${this.ServerBasicResponse.SERVER_STARTED_MESSAGE} ${this.PORT}`);
-            console.log(`API Documentation: http://localhost:${this.PORT}/api-docs`);
+            console.log(`API Documentation: http://localhost:${this.PORT}${this.ServerBasicResponse.SWAGGER_API_DOCS}`);
         });
     }
 }

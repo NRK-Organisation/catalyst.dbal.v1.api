@@ -1,0 +1,21 @@
+const express = require('express');
+
+class BaseRouter {
+    constructor() {
+        this.router = express.Router();
+        this.registerRoutes();
+    }
+
+    registerRoutes() {
+        const routes = this.constructor.routes || [];
+        routes.forEach(({ method, path, handler }) => {
+            this.router[method](path, this[handler].bind(this));
+        });
+    }
+
+    getRouter() {
+        return this.router;
+    }
+}
+
+module.exports = BaseRouter;
