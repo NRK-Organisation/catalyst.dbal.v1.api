@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "start:debug": "nodemon --inspect index.js",
-    "build": "babel src --out-dir dist"
+    "start": "npm run build && npm run start:debug",
+    "start:debug": "node dist/index.js",
+    "build": "babel src --out-dir dist",
+    "start:dev": "nodemon --exec npm run build && npm run start:debug"
   },
   "keywords": [],
   "author": "",

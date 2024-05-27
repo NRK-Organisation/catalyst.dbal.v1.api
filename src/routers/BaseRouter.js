@@ -8,8 +8,11 @@ class BaseRouter {
 
     registerRoutes() {
         const routes = this.constructor.routes || [];
-        routes.forEach(({ method, path, handler }) => {
-            this.router[method](path, this[handler].bind(this));
+        routes.forEach(({ method, path, handler, middlewares }) => {
+            if (!middlewares) {
+                middlewares = [];
+            }
+            this.router[method](path, ...middlewares, this[handler].bind(this));
         });
     }
 

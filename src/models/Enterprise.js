@@ -40,7 +40,7 @@ const EnterpriseSchema = new Schema({
         },
         address: AddressSchema
     },
-    ecode: {
+    enterpriseCode: {
         type: String,
         required: true
     },

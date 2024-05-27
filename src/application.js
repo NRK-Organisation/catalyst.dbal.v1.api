@@ -4,7 +4,7 @@ const { initializaSwagger } = require("./swagger");
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const ServerBasicResponse = require('./utils/texts/serverBasicResponse');
-// const routers = require('./routers');
+const routers = require('./routers');
 const EnterpriseRouter = require('./routers/EnterpriseRouter');
 
 class DatabaseAccessLayerApplication {
@@ -35,8 +35,9 @@ class DatabaseAccessLayerApplication {
     }
 
     generateRouters() {
-        const enterprise = new EnterpriseRouter();
-        this.app.use('/enterprise', enterprise.getRouter());
+        routers.forEach(router => {
+            this.app.use(router.path, router.router);
+        });
     }
 
     startUtilities () {

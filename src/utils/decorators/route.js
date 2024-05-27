@@ -1,10 +1,9 @@
-function route(method, path) {
-    console.log(`route decorator called with ${method} and ${path}`);
+function route(method, path, middlewares) {
     return function (target, key, descriptor) {
         if (!target.constructor.routes) {
             target.constructor.routes = [];
         }
-        target.constructor.routes.push({ method, path, handler: key });
+        target.constructor.routes.push({ method, path, handler: key, middlewares });
     };
 }
 
