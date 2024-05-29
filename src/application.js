@@ -41,7 +41,7 @@ class DatabaseAccessLayerApplication {
     }
 
     startUtilities () {
-        this.ServerBasicResponse = new ServerBasicResponse();
+        this.ServerBasicResponse = ServerBasicResponse;
     }
 
     defineHealthCheckRoutes() {

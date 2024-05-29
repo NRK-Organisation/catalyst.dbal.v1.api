@@ -2,6 +2,8 @@ const _enterpriseService = require("../services/EnterpriseService");
 const route = require('../utils/decorators/route');
 const BaseRouter = require("./BaseRouter");
 const { GET } = require('../utils/texts/methods');
+const ErrorResponse = require("../utils/classes/ErrorResponse");
+const SuccessResponse = require("../utils/classes/SuccessResponse");
 
 class EnterpriseRouter extends BaseRouter {
     constructor() {
@@ -13,8 +15,9 @@ class EnterpriseRouter extends BaseRouter {
         try {
             await _enterpriseService.getEnterprise(req, res);
         } catch (error) {
-            var error = new ErrorResponse(error.message);
-            return res.status(error.statusCode || 400).json(error);
+            var errorResponse = new ErrorResponse(error.message, null, 500, null);
+            errorResponse.InternalServerError(); // Internal Server Error
+            return res.status(errorResponse.statusCode).json(errorResponse.returnResponse());
         }
     }
 
@@ -23,7 +26,9 @@ class EnterpriseRouter extends BaseRouter {
         try {
             await _enterpriseService.createEnterprise(req, res);
         } catch (error) {
-            return res.status(500).json({ message: error.message });
+            var errorResponse = new ErrorResponse(error.message, null, 500, null);
+            errorResponse.InternalServerError(); // Internal Server Error
+            return res.status(errorResponse.statusCode).json(errorResponse.returnResponse());
         }
     }
 }

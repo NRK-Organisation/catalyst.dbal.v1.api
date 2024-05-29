@@ -4,8 +4,9 @@ async function getEnterprise(req, res) {
     try {
         throw new Error('Not implemented');
     } catch (error) {
-        var error = new ErrorResponse(error.message);
-        return res.status(error.statusCode || 400).json(error);
+        var errorResponse = new ErrorResponse(error.message, null, 400, null);
+        errorResponse.InternalServerError(); // Internal Server Error
+        return res.status(errorResponse.statusCode || 400).json(errorResponse.returnResponse());
     }
 }
 
@@ -14,7 +15,9 @@ async function createEnterprise(req, res) {
         const enterprise = req.body;
         return res.status(201).json(enterprise);
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        var errorResponse = new ErrorResponse(error.message, null, 400, null);
+        errorResponse.InternalServerError(); // Internal Server Error
+        return res.status(errorResponse.statusCode || 400).json(errorResponse.returnResponse());
     }
 }
 
