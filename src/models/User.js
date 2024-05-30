@@ -19,10 +19,20 @@ const UserSchema = new Schema({
     email: {
         type: String,
     },
-    Activities: [{
+    activities: [{
         type: Schema.Types.ObjectId,
         ref: 'Activity'
-    }]
+    }],
+    organization: {
+        level: {
+            type: Number,
+            required: true
+        },
+        organizationName: {
+            type: String,
+            required: true
+        }
+    }
 }, {
     timestamps: true
 });

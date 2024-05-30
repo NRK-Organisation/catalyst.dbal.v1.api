@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const AddressSchema = require('./Address');
+const Enums = require('../utils/classes/Enums');
 const Schema = mongoose.Schema;
 
 const EnterpriseSchema = new Schema({
@@ -44,6 +45,18 @@ const EnterpriseSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        statusCode: {
+            type: Number,
+            required: true,
+            enum: Enums.ENTERPRISE_STATUS_KEY
+        },
+        statusName: {
+            type: String,
+            required: true,
+            enum: Enums.ENTERPRISE_STATUS
+        }
+    }
 }, {
     timestamps: true
 });

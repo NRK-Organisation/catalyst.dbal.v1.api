@@ -8,7 +8,7 @@
     "start": "npm run build && npm run start:debug",
     "start:debug": "node dist/index.js",
     "build": "babel src --out-dir dist",
-    "start:dev": "nodemon --exec npm run build && npm run start:debug"
+    "start:dev": "nodemon --exec babel-node src/index.js"
   },
   "keywords": [],
   "author": "",
